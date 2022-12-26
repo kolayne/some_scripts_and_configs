@@ -17,11 +17,8 @@ font pango:monospace 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock -- i3lock -k -c 000000 --inside-color ffffff --indicator
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
+exec --no-startup-id xss-lock -- i3lock --nofork -k --inside-color ffffff --indicator --blur 10 -p default --keylayout 1 --pass-media-keys --pass-volume-keys --pass-screen-keys --pass-power-keys
+# (the above uses "i3lock-color")
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -34,13 +31,10 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Shift+Return exec i3-sensible-terminal
-
-# Start gnome terminal with more transparent profile
-bindsym $mod+Return exec "gnome-terminal --profile 'More transparent' && i3 border none"
+bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+Shift+q kill
+#bindsym $mod+Shift+q kill
 bindsym Mod1+F4 kill
 
 # start dmenu (a program launcher)
@@ -143,7 +137,10 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'How would you like to exit?' -B 'Reboot' 'paplay /usr/share/sounds/freedesktop/stereo/service-logout.oga ; reboot' -B 'Shutdown' 'paplay /usr/share/sounds/freedesktop/stereo/service-logout.oga ; shutdown now' -B 'Exit i3' 'i3 exit'"
+# hibernate
+bindsym $mod+Shift+h exec "i3-nagbar -t warning -m 'Hibernate?' -B 'Yes' 'systemctl hibernate'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -205,21 +202,27 @@ for_window [all] title_window_icon enable
 for_window [title="Task Manager - (Brave|Google Chrome|Chromium)"] floating enable
 for_window [class="gnome-calculator"] floating enable
 for_window [class="Gnome-system-monitor"] floating enable
-
-# Startup applications
-exec --no-startup-id .local/share/gem/ruby/3.0.0/bin/fusuma
-exec --no-startup-id picom --config .config/picom.conf
-exec --no-startup-id redshift-gtk
-exec --no-startup-id cbatticon
-exec --no-startup-id parcellite
-exec --no-startup-id birdtray
-exec vk
-exec telegram-desktop
-exec --no-startup-id Docs/Rimokon/main.py
-# Change wallpaper and start slide show
-exec --no-startup-id systemctl --user start switch_wallpaper.service
-exec --no-startup-id systemctl --user start switch_wallpaper.timer
-
+for_window [class="zoom"] floating enable
 
 # Switch to the first workspace with the appropriate name
 exec --no-startup-id i3-msg workspace $ws1
+
+# Startup applications
+exec --no-startup-id paplay /usr/share/sounds/Yaru/stereo/system-ready.oga
+exec --no-startup-id fusuma
+exec --no-startup-id diodon
+exec --no-startup-id picom --config .config/picom.conf
+exec --no-startup-id redshift-gtk
+exec --no-startup-id cbatticon
+exec --no-startup-id birdtray
+exec vk --debug
+exec telegram-desktop
+exec --no-startup-id Docs/Rimokon/main.py
+
+# FIXME: sets power mode regardless of the current charging mode
+#exec --no-startup-id xcpu set power
+
+# Change wallpaper and start slide show
+# (note: running it here instead of `systemctl enable`, as at the moment
+# of systemd start the X server display is not yet available)
+exec --no-startup-id systemctl --user start switch_wallpaper.service
