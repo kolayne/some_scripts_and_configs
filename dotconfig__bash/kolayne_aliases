@@ -1,0 +1,25 @@
+alias ll='lsd -al --icon never'
+
+alias devil='sudo -Ebu $USER'
+edevil() {
+	devil "$@" && exit
+}
+
+alias cat='lolcat --random'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+function mcd() {
+    mkdir -p -- "$1" && cd -P -- "$1"
+}
+
+if [[ -z "$(alias alert 2>/dev/null)" ]]; then
+    echo Warning: \'alert\' alias is not defined >&2
+else
+    # Redefine the alias to play the sound as command completes.
+    #
+    # This is a sorta dirty trick relying on that `alias` outputs the alias in a
+    # reusable format without trailing whitespace, but I found no better way.
+    eval "$(alias alert)"'" && paplay /usr/share/sounds/Yaru/stereo/complete.oga"'
+fi

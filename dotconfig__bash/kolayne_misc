@@ -1,0 +1,15 @@
+source /etc/profile.d/vte.sh  # Open new tab in the same WD
+
+# ssh-agent, from https://wiki.archlinux.org/title/SSH_keys#SSH_agents
+if [ $(pgrep -u $USER ssh-agent | wc -l) -eq 0 ]; then
+    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+if [[ ! $SSH_AUTH_SOCK ]]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+fi
+
+source ~/.ghcup/env
+
+# The repo is https://github.com/sio/bash-complete-partial-path
+source ~/.config/bash/bash-complete-partial-path/bash_completion
+_bcpp --files --dirs --cooperate --readline
