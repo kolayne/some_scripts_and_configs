@@ -1,9 +1,13 @@
+#!/bin/echo This file is supposed to be sourced only:
+
 alias ll='lsd -al --icon never'
 
 alias devil='sudo -Ebu $USER'
+complete -c devil
 edevil() {
 	devil "$@" && exit
 }
+complete -c edevil
 
 alias cat='lolcat --random'
 
@@ -23,3 +27,6 @@ else
     # reusable format without trailing whitespace, but I found no better way.
     eval "$(alias alert)"'" && paplay /usr/share/sounds/Yaru/stereo/complete.oga"'
 fi
+
+alias vpna='wg-quick up amsterdam'
+alias vpnad='wg-quick down amsterdam'
