@@ -27,8 +27,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+# Set Alt as window drag key
+floating_modifier Mod1
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
@@ -108,6 +108,19 @@ set $ws8 "8"
 set $ws9 "9:Messengers"
 set $ws10 "10:Background"
 
+# Basic assignments
+workspace $ws1 output eDP-1
+workspace $ws9 output eDP-1
+#workspace $ws10 output eDP-1
+# Assignments used for demonstrations
+# 4 - slides control, 5 - terminal control;
+# 6 - slides demo, 7 - terminal demo, 8 - obs preview.
+#workspace $ws4 output eDP-1
+#workspace $ws5 output eDP-1
+#workspace $ws6 output HDMI-1-0
+#workspace $ws7 output HDMI-1-0
+#workspace $ws8 output HDMI-1-0
+
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -184,8 +197,13 @@ bindsym $mod+Tab workspace back_and_forth
 bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10
 
+# Play/pause media key
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+
 # BirdTray hotkey (not $mod but Mod4, intentionally)
 bindsym Mod4+m exec --no-startup-id birdtray --toggle-tb
+
+bindsym $mod+g exec chromium --new-window
 
 # Screenshot hotkeys
 bindsym Print exec --no-startup-id flameshot screen --clipboard
@@ -193,9 +211,6 @@ bindsym Shift+Print exec --no-startup-id flameshot gui
 
 # Lock screen hotkey
 bindsym $mod+l exec --no-startup-id loginctl lock-session
-
-# Set Alt as window drag key
-floating_modifier Mod1
 
 
 for_window [all] title_window_icon enable
@@ -208,16 +223,17 @@ for_window [class="zoom"] floating enable
 exec --no-startup-id i3-msg workspace $ws1
 
 # Startup applications
+exec gnome-terminal -- Docs/nvme_error_seaker.sh
 exec --no-startup-id paplay /usr/share/sounds/Yaru/stereo/system-ready.oga
 exec --no-startup-id fusuma
-exec --no-startup-id diodon
+exec --no-startup-id clipster --daemon
 exec --no-startup-id picom --config .config/picom.conf
 exec --no-startup-id redshift-gtk
-exec --no-startup-id cbatticon
+exec --no-startup-id cbatticon -l 15
 exec --no-startup-id birdtray
 exec vk --debug
 exec telegram-desktop
-exec --no-startup-id Docs/Rimokon/main.py
+exec --no-startup-id python3 -m Docs.Rimokon.Rimokon
 
 # FIXME: sets power mode regardless of the current charging mode
 #exec --no-startup-id xcpu set power
