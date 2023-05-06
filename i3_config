@@ -185,8 +185,8 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
-	font pango:monospace 12
+    status_command i3status
+    font pango:monospace 12
 }
 
 
@@ -212,18 +212,23 @@ bindsym Shift+Print exec --no-startup-id flameshot gui
 # Lock screen hotkey
 bindsym $mod+l exec --no-startup-id loginctl lock-session
 
+bindsym $mod+Shift+x exec --no-startup-id "sh -c \\"if [ -f /tmp/CPU_extreme_mode ]; then cpu unextreme; else cpu extreme; fi\\""
+
 
 for_window [all] title_window_icon enable
 for_window [title="Task Manager - (Brave|Google Chrome|Chromium)"] floating enable
 for_window [class="gnome-calculator"] floating enable
 for_window [class="Gnome-system-monitor"] floating enable
 for_window [class="zoom"] floating enable
+# Thunderbird reminders: sticky and no focus stealing
+for_window [title="\d+ Reminders?"] sticky enable
+no_focus [title="\d+ Reminders?"]
 
 # Switch to the first workspace with the appropriate name
 exec --no-startup-id i3-msg workspace $ws1
 
 # Startup applications
-exec gnome-terminal -- Docs/nvme_error_seaker.sh
+#exec gnome-terminal -- Docs/nvme_error_seaker.sh
 exec --no-startup-id paplay /usr/share/sounds/Yaru/stereo/system-ready.oga
 exec --no-startup-id fusuma
 exec --no-startup-id clipster --daemon
@@ -234,9 +239,6 @@ exec --no-startup-id birdtray
 exec vk --debug
 exec telegram-desktop
 exec --no-startup-id python3 -m Docs.Rimokon.Rimokon
-
-# FIXME: sets power mode regardless of the current charging mode
-#exec --no-startup-id xcpu set power
 
 # Change wallpaper and start slide show
 # (note: running it here instead of `systemctl enable`, as at the moment
