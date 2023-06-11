@@ -17,7 +17,7 @@ font pango:monospace 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock -- i3lock --nofork -k --inside-color ffffff --indicator --blur 10 -p default --keylayout 1 --pass-media-keys --pass-volume-keys --pass-screen-keys --pass-power-keys
+exec --no-startup-id xss-lock -- i3lock --nofork -k --inside-color ffffff --indicator -c ff000077 --blur 10 -p default --keylayout 1 --pass-media-keys --pass-volume-keys --pass-screen-keys --pass-power-keys
 # (the above uses "i3lock-color")
 
 # Use pactl to adjust volume in PulseAudio.
@@ -228,17 +228,17 @@ no_focus [title="\d+ Reminders?"]
 exec --no-startup-id i3-msg workspace $ws1
 
 # Startup applications
-#exec gnome-terminal -- Docs/nvme_error_seaker.sh
+exec --no-startup-id pdeath_hup Docs/nvme_error_seaker.sh
 exec --no-startup-id paplay /usr/share/sounds/Yaru/stereo/system-ready.oga
-exec --no-startup-id fusuma
-exec --no-startup-id clipster --daemon
+exec --no-startup-id pdeath_hup fusuma
+exec --no-startup-id pdeath_hup clipster --daemon
 exec --no-startup-id picom --config .config/picom.conf
 exec --no-startup-id redshift-gtk
 exec --no-startup-id cbatticon -l 15
 exec --no-startup-id birdtray
 exec vk --debug
 exec telegram-desktop
-exec --no-startup-id python3 -m Docs.Rimokon.Rimokon
+exec --no-startup-id pdeath_hup python3 -m Docs.Rimokon.Rimokon
 
 # Change wallpaper and start slide show
 # (note: running it here instead of `systemctl enable`, as at the moment

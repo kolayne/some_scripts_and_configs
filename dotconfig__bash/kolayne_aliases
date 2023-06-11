@@ -15,9 +15,14 @@ alias cat='lolcat --random'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias cd-='cd -'
 function mcd() {
     mkdir -p -- "$1" && cd -- "$1"
 }
+
+
+alias yay='systemd-inhibit --why="Package installation/removal/upgrade" yay'
+alias topgrade='systemd-inhibit --why="System upgrade" topgrade'
 
 
 _alert_paplay='paplay /usr/share/sounds/Yaru/stereo/complete.oga'
