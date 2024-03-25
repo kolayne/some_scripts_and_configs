@@ -1,4 +1,4 @@
-function devil --description 'Start a process in the background'
+function devil --wraps='sudo -Ebu $USER' --description 'Start a process in the background'
   if type -P $argv[1] &>/dev/null
     command $argv &>/dev/null & disown
   else
