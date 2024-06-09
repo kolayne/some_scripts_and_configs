@@ -189,6 +189,8 @@ bar {
     font pango:monospace 12
 }
 
+tiling_drag modifier titlebar
+
 
 # Switch to last workspace
 bindsym $mod+Tab workspace back_and_forth
@@ -218,7 +220,7 @@ bindsym $mod+Shift+x exec --no-startup-id "sh -c \\"if [ -f /tmp/CPU_extreme_mod
 for_window [all] title_window_icon enable
 for_window [title="Task Manager - (Brave|Google Chrome|Chromium)"] floating enable
 for_window [class="gnome-calculator"] floating enable
-for_window [class="Gnome-system-monitor"] floating enable
+for_window [class="gnome-system-monitor"] floating enable
 for_window [class="zoom"] floating enable
 # Thunderbird reminders: sticky and no focus stealing
 for_window [title="\d+ Reminders?"] sticky enable
@@ -235,11 +237,11 @@ exec --no-startup-id pdeath_hup clipster --daemon
 exec --no-startup-id picom --config .config/picom.conf
 exec --no-startup-id redshift-gtk
 exec --no-startup-id cbatticon -l 15
-#exec --no-startup-id birdtray
+exec --no-startup-id birdtray
 # vk does not support startup id
 #exec --no-startup-id vk --debug
-#exec telegram-desktop
-#exec --no-startup-id pdeath_hup Docs/Rimokon/rimokon_main.py
+exec telegram-desktop
+exec --no-startup-id pdeath_hup Docs/Rimokon/rimokon_main.py
 
 # Change wallpaper and start slide show
 # (note: running it here instead of `systemctl enable`, as at the moment
