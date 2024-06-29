@@ -1,0 +1,15 @@
+# Additional service for https://github.com/kolayne/linux-cpu-scaling-helper
+
+[Unit]
+Description=Disable CPU extreme power saving on sleep
+Before=sleep.target
+
+[Service]
+Environment="XDG_RUNTIME_DIR=/run/user/1000"
+Type=oneshot
+User=nikolay
+Group=cpu_tuners
+ExecStart=/usr/local/bin/cpu unextreme
+
+[Install]
+WantedBy=sleep.target
