@@ -25,7 +25,7 @@ if status is-interactive
 
         echo -ne "\\033[90mRan in "
         if test "$days" -gt 0
-            echo -n "{$days}d"
+            echo -n "$days""d"
         end
         if test "$hours" -gt 0
             echo -n "$(math -s 0 "$hours" % 24)h"
