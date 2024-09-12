@@ -22,8 +22,8 @@ exec --no-startup-id xss-lock -- i3lock --nofork -k --inside-color ffffff --indi
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
@@ -41,12 +41,11 @@ for_window[class="XTerm"] floating enable
 bindsym Mod1+F4 kill
 
 # start dmenu (a program launcher)
-#bindsym $mod+d exec dmenu_run
 bindsym Mod1+F2 exec --no-startup-id dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 #bindsym $mod+j focus left
@@ -87,16 +86,23 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+b floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+b focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
 
 # focus the child container
 bindsym $mod+Shift+a focus child
+
+# move the currently focused window to the scratchpad
+bindsym Mod1+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym Mod1+minus scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -114,7 +120,7 @@ set $ws10 "10:Background"
 # Basic assignments
 workspace $ws1 output eDP-1
 workspace $ws9 output eDP-1
-#workspace $ws10 output eDP-1
+workspace $ws10 output HDMI-1-0
 # Assignments used for demonstrations
 # 4 - slides control, 5 - terminal control;
 # 6 - slides demo, 7 - terminal demo, 8 - obs preview.
@@ -147,6 +153,11 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move to scratchpad
+# Show/hide a scratchpad window (cycles through them)
+bindsym $mod+minus scratchpad show
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -185,6 +196,13 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    status_command i3status
+    font pango:monospace 12
+	position top
+}
 tiling_drag modifier titlebar
 
 # Allow workspace stealing
@@ -217,7 +235,7 @@ bindsym $mod+Shift+x exec --no-startup-id "sh -c \\"if [ -f /tmp/CPU_extreme_mod
 
 
 for_window [all] title_window_icon enable
-for_window [title="Task Manager - (Brave|Google Chrome|Chromium)"] floating enable
+for_window [title="Task Manager - (Brave|Google Chrome|Chromium|Yandex Browser)"] floating enable
 for_window [class="gnome-calculator"] floating enable
 for_window [class="gnome-system-monitor"] floating enable
 for_window [class="zoom"] floating enable
@@ -228,7 +246,7 @@ no_focus [title="\d+ Reminders?"]
 # Switch to the first workspace with the appropriate name
 exec --no-startup-id i3-msg workspace $ws1
 
-exec --no-startup-id polybar --reload
+#exec --no-startup-id polybar --reload
 
 # Startup applications
 exec --no-startup-id pdeath_hup Docs/nvme_error_seaker.sh
