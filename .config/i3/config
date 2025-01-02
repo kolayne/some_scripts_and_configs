@@ -216,13 +216,13 @@ bindsym Mod4+m exec --no-startup-id birdtray --toggle-tb
 bindsym $mod+g exec chromium --new-window
 
 # Screenshot hotkeys
-bindsym Print exec --no-startup-id flameshot screen --clipboard
-bindsym Shift+Print exec --no-startup-id flameshot gui
+bindsym Ctrl+Print exec --no-startup-id flameshot screen --clipboard
+bindsym Print exec --no-startup-id flameshot gui
 
 # Lock screen hotkey
 bindsym $mod+l exec --no-startup-id loginctl lock-session
 
-bindsym $mod+Shift+x exec --no-startup-id "sh -c \\"if [ -f /tmp/CPU_extreme_mode ]; then cpu unextreme; else cpu extreme; fi\\""
+bindsym $mod+Shift+x exec --no-startup-id "sh -c \\"if [ -f /tmp/CPU_extreme_mode ]; then xcpu unextreme; else xcpu extreme; fi\\""
 
 
 for_window [all] title_window_icon enable
