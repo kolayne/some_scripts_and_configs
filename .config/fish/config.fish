@@ -7,8 +7,8 @@ if status is-interactive
     abbr --add vpna wg-quick up amsterdam
     abbr --add vpnad wg-quick down amsterdam
 
-    abbr --add --set-cursor=% umnt udisksctl mount -b /dev/sd%
-    abbr --add --set-cursor=% uumnt udisksctl unmount -b /dev/sd%
+    abbr --add umnt udisksctl mount -b
+    abbr --add uumnt udisksctl unmount -b
 
     abbr --add inhib --set-cursor=% systemd-inhibit --what=%handle-lid-switch
 
