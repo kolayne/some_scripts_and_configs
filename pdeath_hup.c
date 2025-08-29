@@ -6,7 +6,7 @@
 
 int main(int argc, char *const *argv) {
   if (argc <= 1) {
-    fputs("There must be a command to run on the command line", stderr);
+    fputs("There must be a command to run on the command line\n", stderr);
     return 1;
   }
 
