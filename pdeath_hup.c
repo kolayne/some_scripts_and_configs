@@ -6,12 +6,12 @@
 
 int main(int argc, char *const *argv) {
   if (argc <= 1) {
-    puts("There must be a command to run");
+    fputs("There must be a command to run on the command line", stderr);
     return 1;
   }
 
   int err = prctl(PR_SET_PDEATHSIG, SIGHUP);
-  assert(err == 0);  /* The only possible error could be EINVAL */
+  assert(err == 0);  /* The only possible error should be EINVAL */
 
   (void)execvp(argv[1], argv + 1);
 
